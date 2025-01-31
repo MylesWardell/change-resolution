@@ -1,1 +1,1 @@
-Simple Resolution Changer
+### Simple Resolution Changer
