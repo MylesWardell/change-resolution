@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "start": "deno run --allow-read --allow-run main.ts",
+    "dev": "deno run --watch --allow-read --allow-run main.ts",
+    "compile": "deno compile --allow-read --allow-run -o change-resolution.exe main.ts ChangeScreenResolution.exe"
+  }
+}
