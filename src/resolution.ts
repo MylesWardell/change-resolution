@@ -1,6 +1,8 @@
-type Resolution = [number, number];
-type ResolutionString = `${number}/${number}`;
-type ResolutionName = "Native" | "16:10" | "4:3";
+import {
+  Resolution,
+  ResolutionName,
+  ResolutionString,
+} from "~/types/resolution.ts";
 
 const NameToValue: Record<ResolutionName, Resolution> = {
   "Native": [3840, 2160],
@@ -15,7 +17,7 @@ const ValueToName = new Map(
   ),
 );
 
-const setResolution = async (resolution: ResolutionName) => {
+export const setResolution = async (resolution: ResolutionName) => {
   const [width, height] = NameToValue[resolution];
 
   const command = new Deno.Command("powershell", {
@@ -38,7 +40,7 @@ const setResolution = async (resolution: ResolutionName) => {
 
 const decodeText = (text: string) => parseInt(text.split("\r")[0].trim());
 
-const getResolution = async (): Promise<ResolutionName | undefined> => {
+export const getResolution = async (): Promise<ResolutionName | undefined> => {
   const command = new Deno.Command("powershell", {
     args: ["Get-DisplayResolution"],
   });
@@ -57,7 +59,7 @@ const getResolution = async (): Promise<ResolutionName | undefined> => {
   return resolutionName;
 };
 
-const main = async () => {
+export const changeResolution = async () => {
   const resolution = await getResolution();
 
   if (!resolution) {
@@ -72,8 +74,3 @@ const main = async () => {
     await setResolution("Native");
   }
 };
-
-// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  await main();
-}
